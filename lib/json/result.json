@@ -1,0 +1,39 @@
+{
+    "channel": {
+        "id": 1150911,
+        "name": "Weather project",
+        "latitude": "0.0",
+        "longitude": "0.0",
+        "field1": "Temperature",
+        "field2": "Humidity",
+        "field3": "pm1",
+        "field4": "pm2.5",
+        "field5": "pm10",
+        "field6": "Light",
+        "created_at": "2020-09-20T14:05:15Z",
+        "updated_at": "2020-09-21T06:20:33Z",
+        "last_entry_id": 12
+    },
+    "feeds": [
+        {
+            "created_at": "2020-09-21T06:24:05Z",
+            "entry_id": 11,
+            "field1": "27.60",
+            "field2": "55.60",
+            "field3": "3",
+            "field4": "5",
+            "field5": "5",
+            "field6": "129.17"
+        },
+        {
+            "created_at": "2020-09-21T06:25:42Z",
+            "entry_id": 12,
+            "field1": "28.20",
+            "field2": "96.60",
+            "field3": "3",
+            "field4": "4",
+            "field5": "5",
+            "field6": "150.83"
+        }
+    ]
+}
