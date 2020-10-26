@@ -86,7 +86,7 @@ class _RangeTempHumiState extends State<RangeTempHumi> {
                       onChanged: (val) => setState(() => _lowTemp = val),
                     ),
                     Text(
-                      ">",
+                      "<",
                       style: TextStyle(
                         fontSize: 30.0,
                         color: Colors.white,
