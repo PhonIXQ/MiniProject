@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'package:Model/screens/range_temp_humi.dart';
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+// import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:http/http.dart' as http;
 
 class HomeScreen extends StatefulWidget {
@@ -78,26 +78,64 @@ class _HomeScreenState extends State<HomeScreen> {
                 ],
               ),
             ),
-            // SizedBox(height: 20),
+            SizedBox(height: 10),
             Expanded(
               child: Padding(
-                padding: EdgeInsets.all(20.0),
+                padding: EdgeInsets.all(10.0),
                 child: ListView(
                   children: <Widget>[
                     ListTile(
-                      leading: FaIcon(FontAwesomeIcons.windowClose),
-                      title: Text("PM 1"),
-                      trailing: Text(pm1 != null ? pm1.toString() : ".."),
+                      // leading: FaIcon(FontAwesomeIcons.windowClose),
+                      title: Text(
+                        "PM 1",
+                        style: TextStyle(
+                          fontSize: 16,
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      trailing: Text(
+                        pm1 != null ? pm1.toString() : "..",
+                        style: TextStyle(
+                          fontSize: 15,
+                          color: Colors.white,
+                        ),
+                      ),
                     ),
                     ListTile(
-                      leading: FaIcon(FontAwesomeIcons.windowClose),
-                      title: Text("PM 2.5"),
-                      trailing: Text(pm25 != null ? pm25.toString() : ".."),
+                      // leading: FaIcon(FontAwesomeIcons.windowClose),
+                      title: Text(
+                        "PM 2.5",
+                        style: TextStyle(
+                          fontSize: 16,
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      trailing: Text(
+                        pm25 != null ? pm25.toString() : "..",
+                        style: TextStyle(
+                          fontSize: 15,
+                          color: Colors.white,
+                        ),
+                      ),
                     ),
                     ListTile(
-                      leading: FaIcon(FontAwesomeIcons.windowClose),
-                      title: Text("PM 10"),
-                      trailing: Text(pm10 != null ? pm10.toString() : ".."),
+                      // leading: FaIcon(FontAwesomeIcons.windowClose),
+                      title: Text(
+                        "PM 10",
+                        style: TextStyle(
+                            fontSize: 16,
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold),
+                      ),
+                      trailing: Text(
+                        pm10 != null ? pm10.toString() : "..",
+                        style: TextStyle(
+                          fontSize: 15,
+                          color: Colors.white,
+                        ),
+                      ),
                     ),
                   ],
                 ),

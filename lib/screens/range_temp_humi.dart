@@ -1,4 +1,3 @@
-import 'package:Model/utilities/constants.dart';
 import 'package:Model/utilities/temp_dropdown.dart';
 import 'package:flutter/material.dart';
 
@@ -8,7 +7,8 @@ class RangeTempHumi extends StatefulWidget {
 }
 
 class _RangeTempHumiState extends State<RangeTempHumi> {
-  String temp = '30';
+  String _oTemp = 'T30';
+  String _lowTemp = 'T33';
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -16,78 +16,129 @@ class _RangeTempHumiState extends State<RangeTempHumi> {
       appBar: AppBar(),
       body: Column(
         children: <Widget>[
+          Padding(
+            padding: EdgeInsets.all(20),
+            child: Text(
+              "Range Temperature-Humity",
+              style: TextStyle(
+                color: Colors.white,
+                fontSize: 25,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          ),
           Container(
             padding: EdgeInsets.only(left: 10.0, right: 10.0),
-            child: Image.asset('assets/images/range_temp_humi.jpg'),
+            child: Image.asset('assets/images/range_temp.jpg'),
           ),
-          // Row(
-          //   children: [
-          //     _buildResultTemp("Lower Temp"),
-          //     _buildResultTemp("Over Temp"),
-          //   ],
-          // ),
-          Row(
-            // mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: <Widget>[
-              Text(
-                'Lower Temp',
-                style: const TextStyle(
-                  color: Colors.white,
-                  fontSize: 18.0,
-                  fontWeight: FontWeight.bold,
+          Container(
+            padding: EdgeInsets.only(
+              top: 10,
+              left: 40,
+              right: 40,
+              bottom: 10,
+            ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: <Widget>[
+                    Text(
+                      'Lower Temp',
+                      style: const TextStyle(
+                        color: Colors.white,
+                        fontSize: 18.0,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    Text(
+                      'Over Temp',
+                      style: const TextStyle(
+                        color: Colors.white,
+                        fontSize: 18.0,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ],
                 ),
-              ),
-              TempDropdown(
-                countries: ['CN', 'FR', 'IN', 'IT', 'UK', 'USA'],
-                temp: temp,
-                onChanged: (val) => setState(() => temp = val),
-              ),
-              TempDropdown(
-                countries: ['CN', 'FR', 'IN', 'IT', 'UK', 'USA'],
-                temp: temp,
-                onChanged: (val) => setState(() => temp = val),
-              ),
-              Text(
-                'Lower Temp',
-                style: const TextStyle(
-                  color: Colors.white,
-                  fontSize: 18.0,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-            ],
+              ],
+            ),
           ),
+          Container(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: <Widget>[
+                    TempDropdown(
+                      tempsLabel: [
+                        'T30',
+                        'T31',
+                        'T32',
+                        'T33',
+                        'T34',
+                        'T35',
+                        'T36'
+                      ],
+                      temps: _lowTemp,
+                      onChanged: (val) => setState(() => _lowTemp = val),
+                    ),
+                    Text(
+                      ">",
+                      style: TextStyle(
+                        fontSize: 30.0,
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    TempDropdown(
+                      tempsLabel: [
+                        'T30',
+                        'T31',
+                        'T32',
+                        'T33',
+                        'T34',
+                        'T35',
+                        'T36'
+                      ],
+                      temps: _oTemp,
+                      onChanged: (val) => setState(() => _oTemp = val),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          ),
+          _buildSentResult(),
         ],
       ),
     );
   }
 
-  Widget _buildResultTemp(String title) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.center,
-      children: <Widget>[
-        Text(
-          "$title",
-          style: kLabelStyle,
+  Widget _buildSentResult() {
+    return Container(
+      padding: EdgeInsets.symmetric(vertical: 10.0),
+      width: 100.0,
+      child: RaisedButton(
+        elevation: 5.0,
+        onPressed: () {},
+        padding: EdgeInsets.all(10.0),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(30.0),
         ),
-        SizedBox(height: 8.0),
-        Container(
-          alignment: Alignment.centerLeft,
-          decoration: kBoxDecorationStyle,
-          height: 60.0,
-          child: TextField(
-            obscureText: true,
-            style: TextStyle(
-              color: Colors.white,
-            ),
-            decoration: InputDecoration(
-              border: InputBorder.none,
-              contentPadding: EdgeInsets.only(top: 14.0),
-              hintStyle: kHintTextStyle,
-            ),
+        color: Colors.white,
+        child: Text(
+          'Push',
+          style: TextStyle(
+            color: Color(0xFF527DAA),
+            letterSpacing: 1.5,
+            fontSize: 18.0,
+            fontWeight: FontWeight.bold,
           ),
         ),
-      ],
+      ),
     );
   }
 }

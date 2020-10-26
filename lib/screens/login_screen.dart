@@ -1,5 +1,4 @@
 import 'package:Model/screens/home_screen.dart';
-// import 'package:Model/screens/home_seen.dart';
 import 'package:Model/screens/signup_screen.dart';
 import 'package:Model/utilities/constants.dart';
 import 'package:flutter/material.dart';
