@@ -42,102 +42,93 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Color(0xFF398AE5),
-      appBar: AppBar(),
+      appBar: AppBar(
+        leading: IconButton(
+          icon: Icon(Icons.home),
+          onPressed: () {},
+        ),
+        actions: [
+          IconButton(
+            icon: Icon(Icons.refresh),
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => HomeScreen(),
+                ),
+              );
+            },
+          ),
+          IconButton(
+            icon: Icon(Icons.settings),
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => RangeTempHumi(),
+                ),
+              );
+            },
+          ),
+        ],
+      ),
       body: Container(
         padding: EdgeInsets.symmetric(horizontal: 20.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-            // CustomAppBar(),
             Padding(
-              padding: EdgeInsets.all(20),
+              padding: EdgeInsets.only(top: 20, left: 10),
               child: Text(
-                "Weather",
+                "RPC Weather",
                 style: TextStyle(
                   color: Colors.white,
                   fontWeight: FontWeight.bold,
-                  fontSize: 32,
+                  fontSize: 30,
                 ),
               ),
             ),
             _buildContainer(),
             Container(
-              height: 130,
-              child: ListView(
-                scrollDirection: Axis.horizontal,
-                padding: EdgeInsets.only(left: 10, top: 10),
-                physics: BouncingScrollPhysics(),
+              height: MediaQuery.of(context).size.width / 3,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: <Widget>[
                   _buildWeather("assets/images/icon_temp.png", "Temp", "$temp"),
                   _buildWeather(
                       "assets/images/icon_humi.png", "Humi", "$humidity"),
                   _buildWeather(
                       "assets/images/icon_light.png", "Light", "$light"),
-                  _buildOtherBtn(),
                 ],
               ),
             ),
             SizedBox(height: 10),
-            Expanded(
-              child: Padding(
-                padding: EdgeInsets.all(10.0),
-                child: ListView(
-                  children: <Widget>[
-                    ListTile(
-                      // leading: FaIcon(FontAwesomeIcons.windowClose),
-                      title: Text(
-                        "PM 1",
-                        style: TextStyle(
-                          fontSize: 16,
-                          color: Colors.white,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                      trailing: Text(
-                        pm1 != null ? pm1.toString() : "..",
-                        style: TextStyle(
-                          fontSize: 15,
-                          color: Colors.white,
-                        ),
+            Container(
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  Padding(
+                    padding: EdgeInsets.all(20.0),
+                    child: Text(
+                      "Dust PM in RPC",
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 20.0,
+                        fontWeight: FontWeight.bold,
                       ),
                     ),
-                    ListTile(
-                      // leading: FaIcon(FontAwesomeIcons.windowClose),
-                      title: Text(
-                        "PM 2.5",
-                        style: TextStyle(
-                          fontSize: 16,
-                          color: Colors.white,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                      trailing: Text(
-                        pm25 != null ? pm25.toString() : "..",
-                        style: TextStyle(
-                          fontSize: 15,
-                          color: Colors.white,
-                        ),
-                      ),
-                    ),
-                    ListTile(
-                      // leading: FaIcon(FontAwesomeIcons.windowClose),
-                      title: Text(
-                        "PM 10",
-                        style: TextStyle(
-                            fontSize: 16,
-                            color: Colors.white,
-                            fontWeight: FontWeight.bold),
-                      ),
-                      trailing: Text(
-                        pm10 != null ? pm10.toString() : "..",
-                        style: TextStyle(
-                          fontSize: 15,
-                          color: Colors.white,
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
+                  ),
+                ],
+              ),
+            ),
+            Container(
+              height: MediaQuery.of(context).size.height / 4,
+              child: Column(
+                children: <Widget>[
+                  _buildDustPM("PM 1", "$pm1"),
+                  _buildDustPM("PM 2.5", "$pm25"),
+                  _buildDustPM("PM 10", "$pm10"),
+                ],
               ),
             ),
           ],
@@ -148,12 +139,10 @@ class _HomeScreenState extends State<HomeScreen> {
 
   Widget _buildContainer() {
     return Container(
-      height: MediaQuery.of(context).size.height / 4,
+      height: MediaQuery.of(context).size.height / 4.7,
       width: MediaQuery.of(context).size.width,
-      // color: Colors.red,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.center,
         children: <Widget>[
           Padding(
             padding: EdgeInsets.only(bottom: 10.0),
@@ -166,21 +155,13 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
             ),
           ),
-          Text(
-            temp != null ? temp.toString() + "\u00B0" : "...",
-            style: TextStyle(
-              color: Colors.white,
-              fontSize: 40.0,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
           Padding(
             padding: EdgeInsets.only(top: 10.0),
             child: Text(
-              currently != null ? currently.toString() : "",
+              temp != null ? temp.toString() + "\u00B0" : "...",
               style: TextStyle(
                 color: Colors.white,
-                fontSize: 18.0,
+                fontSize: 30.0,
                 fontWeight: FontWeight.bold,
               ),
             ),
@@ -190,11 +171,11 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  Widget _buildWeather(String iconWeath, String resultName, String resultNum) {
-    return Column(
+  Widget _buildWeather(String iconWeath, String title, String result) {
+    return Row(
       children: <Widget>[
         Container(
-          width: 70,
+          width: 80,
           decoration: BoxDecoration(
             color: Colors.blue,
             borderRadius: BorderRadius.all(
@@ -210,22 +191,21 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
             ],
           ),
-          padding: EdgeInsets.all(12),
+          padding: EdgeInsets.all(10),
           child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: <Widget>[
               Text(
-                "$resultName",
+                "$title",
                 style: TextStyle(
-                  fontSize: 16,
+                  fontSize: 18,
                   color: Colors.white,
                   fontWeight: FontWeight.bold,
                 ),
               ),
-              SizedBox(height: 8),
-              Image.asset(iconWeath, width: 33.0),
-              SizedBox(height: 8),
+              Image.asset(iconWeath, width: 38.0),
               Text(
-                "$resultNum",
+                "$result",
                 style: TextStyle(
                   fontSize: 15,
                   color: Colors.white,
@@ -233,39 +213,49 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
             ],
           ),
-          margin: EdgeInsets.only(right: 20),
         ),
-        SizedBox(height: 7),
       ],
     );
   }
 
-  Widget _buildOtherBtn() {
-    return Container(
-      alignment: Alignment.center,
-      width: 40.0,
-      padding: EdgeInsets.only(bottom: 10),
-      child: RaisedButton(
-        elevation: 5.0,
-        onPressed: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => RangeTempHumi(),
+  Widget _buildDustPM(String title, String result) {
+    return Expanded(
+      child: Container(
+        decoration: BoxDecoration(
+          color: Colors.blue,
+          borderRadius: BorderRadius.all(
+            Radius.circular(15),
+          ),
+          border: Border.all(color: Colors.white),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black12,
+              offset: Offset(1, 1),
+              spreadRadius: 1,
+              blurRadius: 1,
             ),
-          );
-        },
-        // padding: EdgeInsets.all(15.0),
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(30.0),
+          ],
         ),
-        color: Colors.white,
-        child: Text(
-          '>>',
-          style: TextStyle(
-            color: Colors.blue,
-            fontSize: 30.0,
-            fontWeight: FontWeight.bold,
+        child: Container(
+          child: ListView(
+            children: <Widget>[
+              ListTile(
+                // leading: FaIcon(FontAwesomeIcons.windowClose),
+                title: Text(
+                  "$title",
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                trailing: Text(
+                  '$result' != null ? '$result'.toString() : "..",
+                  style: TextStyle(
+                    color: Colors.white,
+                  ),
+                ),
+              ),
+            ],
           ),
         ),
       ),

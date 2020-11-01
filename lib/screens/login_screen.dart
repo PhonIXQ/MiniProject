@@ -20,8 +20,8 @@ class _LoginScreenState extends State<LoginScreen> {
           child: Stack(
             children: <Widget>[
               Container(
-                height: double.infinity,
-                width: double.infinity,
+                height: MediaQuery.of(context).size.height,
+                width: MediaQuery.of(context).size.height,
                 decoration: BoxDecoration(
                   gradient: LinearGradient(
                     begin: Alignment.topCenter,
@@ -37,30 +37,33 @@ class _LoginScreenState extends State<LoginScreen> {
                 ),
               ),
               Container(
-                height: double.infinity,
+                height: MediaQuery.of(context).size.height,
                 child: SingleChildScrollView(
                   physics: AlwaysScrollableScrollPhysics(),
                   padding: EdgeInsets.symmetric(
                     horizontal: 40.0,
-                    vertical: 70.0,
+                    vertical: 40.0,
                   ),
                   child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
+                      SizedBox(
+                          height: MediaQuery.of(context).size.height * 0.03),
                       _buildLogoIcon(),
-                      SizedBox(height: 18.0),
+                      SizedBox(
+                          height: MediaQuery.of(context).size.height * 0.03),
                       Text(
                         'Sign In',
                         style: TextStyle(
                           color: Colors.white,
-                          // fontFamily: 'OpenSans',
                           fontSize: 30.0,
                           fontWeight: FontWeight.bold,
                         ),
                       ),
-                      SizedBox(height: 18.0),
+                      SizedBox(
+                          height: MediaQuery.of(context).size.height * 0.03),
                       _buildEmailTF(),
-                      SizedBox(height: 18.0),
+                      SizedBox(
+                          height: MediaQuery.of(context).size.height * 0.03),
                       _buildPasswordTF(),
                       _buildForgotPasswordBtn(),
                       _buildLoginBtn(),
@@ -68,7 +71,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     ],
                   ),
                 ),
-              )
+              ),
             ],
           ),
         ),
@@ -169,7 +172,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
   Widget _buildLoginBtn() {
     return Container(
-      padding: EdgeInsets.symmetric(vertical: 25.0),
+      padding: EdgeInsets.symmetric(vertical: 15.0),
       width: 170.0,
       child: RaisedButton(
         elevation: 5.0,
@@ -190,7 +193,7 @@ class _LoginScreenState extends State<LoginScreen> {
           'Log In',
           style: TextStyle(
             color: Color(0xFF527DAA),
-            letterSpacing: 1.5,
+            letterSpacing: 1.3,
             fontSize: 18.0,
             fontWeight: FontWeight.bold,
           ),

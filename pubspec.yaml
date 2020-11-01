@@ -25,6 +25,7 @@ dependencies:
     sdk: flutter
   font_awesome_flutter: ^8.7.0
   http: ^0.12.2
+  flutter_local_notifications: ^3.0.1+2
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
@@ -37,7 +38,7 @@ dev_dependencies:
   flutter_launcher_icons: ^0.8.1
 
 flutter_launcher_name:
-  name: "Model Weather"
+  name: "RPC Weather"
 
 flutter_icons:
   image_path: "assets/images/icon.png"

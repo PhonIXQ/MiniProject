@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
 class TempDropdown extends StatelessWidget {
-  final List<String> tempsLabel;
-  final String temps;
-  final Function(String) onChanged;
+  final List<int> tempsLabel;
+  final int temps;
+  final Function(int) onChanged;
 
   const TempDropdown({
     @required this.tempsLabel,
@@ -21,7 +21,7 @@ class TempDropdown extends StatelessWidget {
         borderRadius: BorderRadius.circular(30.0),
       ),
       child: DropdownButtonHideUnderline(
-        child: DropdownButton<String>(
+        child: DropdownButton<int>(
           value: temps,
           items: tempsLabel
               .map((e) => DropdownMenuItem(
@@ -29,7 +29,7 @@ class TempDropdown extends StatelessWidget {
                       children: <Widget>[
                         SizedBox(width: 8.0),
                         Text(
-                          e,
+                          '$e',
                           style: const TextStyle(
                             fontSize: 16.0,
                             fontWeight: FontWeight.bold,

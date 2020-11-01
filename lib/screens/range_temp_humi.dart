@@ -7,8 +7,14 @@ class RangeTempHumi extends StatefulWidget {
 }
 
 class _RangeTempHumiState extends State<RangeTempHumi> {
-  String _oTemp = 'T30';
-  String _lowTemp = 'T33';
+  int _lowerTemp = 29;
+  int _overTemp = 35;
+
+  @override
+  void initState() {
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -73,17 +79,9 @@ class _RangeTempHumiState extends State<RangeTempHumi> {
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: <Widget>[
                     TempDropdown(
-                      tempsLabel: [
-                        'T30',
-                        'T31',
-                        'T32',
-                        'T33',
-                        'T34',
-                        'T35',
-                        'T36'
-                      ],
-                      temps: _lowTemp,
-                      onChanged: (val) => setState(() => _lowTemp = val),
+                      tempsLabel: [29, 30, 31, 32, 33, 34, 35, 36],
+                      temps: _lowerTemp,
+                      onChanged: (val) => setState(() => _lowerTemp = val),
                     ),
                     Text(
                       "<",
@@ -94,17 +92,9 @@ class _RangeTempHumiState extends State<RangeTempHumi> {
                       ),
                     ),
                     TempDropdown(
-                      tempsLabel: [
-                        'T30',
-                        'T31',
-                        'T32',
-                        'T33',
-                        'T34',
-                        'T35',
-                        'T36'
-                      ],
-                      temps: _oTemp,
-                      onChanged: (val) => setState(() => _oTemp = val),
+                      tempsLabel: [29, 30, 31, 32, 33, 34, 35, 36],
+                      temps: _overTemp,
+                      onChanged: (val) => setState(() => _overTemp = val),
                     ),
                   ],
                 ),
