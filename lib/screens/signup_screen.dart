@@ -1,4 +1,4 @@
-import 'package:Model/screens/login_screen.dart';
+import 'package:Model/services/authen_service.dart';
 import 'package:Model/utilities/constants.dart';
 import 'package:flutter/material.dart';
 
@@ -8,10 +8,24 @@ class SignupScreen extends StatefulWidget {
 }
 
 class _SignupScreenState extends State<SignupScreen> {
+  final _key = GlobalKey<FormState>();
+
+  final AuthenService _auth = AuthenService();
+
+  TextEditingController _nameController = TextEditingController();
+  TextEditingController _emailController = TextEditingController();
+  TextEditingController _passwordController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
+      appBar: AppBar(
+        leading: IconButton(
+            icon: Icon(Icons.arrow_back),
+            onPressed: () {
+              Navigator.pop(context);
+            }),
+      ),
       body: Container(
         decoration: BoxDecoration(
           gradient: LinearGradient(
@@ -32,6 +46,7 @@ class _SignupScreenState extends State<SignupScreen> {
             physics: AlwaysScrollableScrollPhysics(),
             padding: EdgeInsets.symmetric(horizontal: 40.0),
             child: Column(
+              key: _key,
               children: <Widget>[
                 SizedBox(height: MediaQuery.of(context).size.height * 0.03),
                 SizedBox(height: MediaQuery.of(context).size.height * 0.03),
@@ -43,12 +58,12 @@ class _SignupScreenState extends State<SignupScreen> {
                     fontWeight: FontWeight.bold,
                   ),
                 ),
+                _buildNameTF(),
                 SizedBox(height: MediaQuery.of(context).size.height * 0.03),
                 _buildEmailTF(),
                 SizedBox(height: MediaQuery.of(context).size.height * 0.03),
-                _buildPasswordTF("Password"),
+                _buildPasswordTF(),
                 SizedBox(height: MediaQuery.of(context).size.height * 0.03),
-                _buildPasswordTF("Confirm Password"),
                 _buildSignupBtn(),
                 _buildLoginBtn(),
               ],
@@ -56,6 +71,48 @@ class _SignupScreenState extends State<SignupScreen> {
           ),
         ),
       ),
+    );
+  }
+
+  Widget _buildNameTF() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: <Widget>[
+        Text(
+          'Name',
+          style: kLabelStyle,
+        ),
+        SizedBox(height: 8.0),
+        Container(
+          alignment: Alignment.centerLeft,
+          decoration: kBoxDecorationStyle,
+          height: 60.0,
+          child: TextFormField(
+            controller: _nameController,
+            validator: (value) {
+              if (value.isEmpty) {
+                return 'Name cannot be empty';
+              } else {
+                return null;
+              }
+            },
+            keyboardType: TextInputType.emailAddress,
+            style: TextStyle(
+              color: Colors.white,
+            ),
+            decoration: InputDecoration(
+              border: InputBorder.none,
+              contentPadding: EdgeInsets.only(top: 14.0),
+              prefixIcon: Icon(
+                Icons.email,
+                color: Colors.white,
+              ),
+              hintText: 'Enter your Name',
+              hintStyle: kHintTextStyle,
+            ),
+          ),
+        ),
+      ],
     );
   }
 
@@ -72,7 +129,15 @@ class _SignupScreenState extends State<SignupScreen> {
           alignment: Alignment.centerLeft,
           decoration: kBoxDecorationStyle,
           height: 60.0,
-          child: TextField(
+          child: TextFormField(
+            controller: _emailController,
+            validator: (value) {
+              if (value.isEmpty) {
+                return 'Email cannot be empty';
+              } else {
+                return null;
+              }
+            },
             keyboardType: TextInputType.emailAddress,
             style: TextStyle(
               color: Colors.white,
@@ -93,12 +158,12 @@ class _SignupScreenState extends State<SignupScreen> {
     );
   }
 
-  Widget _buildPasswordTF(String title) {
+  Widget _buildPasswordTF() {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
         Text(
-          '$title',
+          'Password',
           style: kLabelStyle,
         ),
         SizedBox(height: 8.0),
@@ -106,8 +171,16 @@ class _SignupScreenState extends State<SignupScreen> {
           alignment: Alignment.centerLeft,
           decoration: kBoxDecorationStyle,
           height: 60.0,
-          child: TextField(
+          child: TextFormField(
             obscureText: true,
+            controller: _passwordController,
+            validator: (value) {
+              if (value.isEmpty) {
+                return 'Password cannot be empty';
+              } else {
+                return null;
+              }
+            },
             style: TextStyle(
               color: Colors.white,
             ),
@@ -133,7 +206,12 @@ class _SignupScreenState extends State<SignupScreen> {
       width: 170.0,
       child: RaisedButton(
         elevation: 5.0,
-        onPressed: () {},
+        onPressed: () {
+          if (_key.currentState.validate()) {
+            buildUser();
+          }
+          Navigator.pop(context);
+        },
         padding: EdgeInsets.all(15.0),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(30.0),
@@ -155,12 +233,7 @@ class _SignupScreenState extends State<SignupScreen> {
   Widget _buildLoginBtn() {
     return GestureDetector(
       onTap: () {
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => LoginScreen(),
-          ),
-        );
+        Navigator.pop(context);
       },
       child: RichText(
         text: TextSpan(
@@ -187,5 +260,16 @@ class _SignupScreenState extends State<SignupScreen> {
         ),
       ),
     );
+  }
+
+  void buildUser() async {
+    dynamic result = await _auth.createUser(
+        _nameController.text, _emailController.text, _passwordController.text);
+    if (result == null) {
+      print('Email is not valid');
+    } else {
+      print(result.toString());
+      Navigator.pop(context);
+    }
   }
 }

@@ -1,6 +1,8 @@
 import 'package:Model/screens/home_screen.dart';
 import 'package:Model/screens/signup_screen.dart';
+import 'package:Model/services/authen_service.dart';
 import 'package:Model/utilities/constants.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -10,6 +12,12 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
+  final _key = GlobalKey<FormState>();
+  final AuthenService _auth = AuthenService();
+
+  TextEditingController _emailField = TextEditingController();
+  TextEditingController _passwordField = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -45,6 +53,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     vertical: 40.0,
                   ),
                   child: Column(
+                    key: _key,
                     children: <Widget>[
                       SizedBox(
                           height: MediaQuery.of(context).size.height * 0.03),
@@ -101,7 +110,15 @@ class _LoginScreenState extends State<LoginScreen> {
           alignment: Alignment.centerLeft,
           decoration: kBoxDecorationStyle,
           height: 60.0,
-          child: TextField(
+          child: TextFormField(
+            controller: _emailField,
+            validator: (value) {
+              if (value.isEmpty) {
+                return 'Email cannot be empty';
+              } else {
+                return null;
+              }
+            },
             keyboardType: TextInputType.emailAddress,
             style: TextStyle(
               color: Colors.white,
@@ -135,8 +152,16 @@ class _LoginScreenState extends State<LoginScreen> {
           alignment: Alignment.centerLeft,
           decoration: kBoxDecorationStyle,
           height: 60.0,
-          child: TextField(
+          child: TextFormField(
+            controller: _passwordField,
             obscureText: true,
+            validator: (value) {
+              if (value.isEmpty) {
+                return 'Email cannot be empty';
+              } else {
+                return null;
+              }
+            },
             style: TextStyle(
               color: Colors.white,
             ),
@@ -177,12 +202,9 @@ class _LoginScreenState extends State<LoginScreen> {
       child: RaisedButton(
         elevation: 5.0,
         onPressed: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => HomeScreen(),
-            ),
-          );
+          if (_key.currentState.validate()) {
+            signInUser();
+          }
         },
         padding: EdgeInsets.all(15.0),
         shape: RoundedRectangleBorder(
@@ -205,9 +227,9 @@ class _LoginScreenState extends State<LoginScreen> {
   Widget _buildSignupBtn() {
     return GestureDetector(
       onTap: () {
-        Navigator.push(
-          context,
+        Navigator.of(context).push(
           MaterialPageRoute(
+            fullscreenDialog: true,
             builder: (context) => SignupScreen(),
           ),
         );
@@ -237,5 +259,21 @@ class _LoginScreenState extends State<LoginScreen> {
         ),
       ),
     );
+  }
+
+  void signInUser() async {
+    dynamic authResult =
+        await _auth.loginUser(_emailField.text, _passwordField.text);
+    if (authResult == null) {
+      print('Sign in error. could not be able to login');
+    } else {
+      Navigator.of(context).push(
+        MaterialPageRoute(
+          fullscreenDialog: true,
+          builder: (context) => HomeScreen(),
+        ),
+      );
+      print('Singned In');
+    }
   }
 }

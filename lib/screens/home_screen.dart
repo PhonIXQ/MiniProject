@@ -44,12 +44,18 @@ class _HomeScreenState extends State<HomeScreen> {
       backgroundColor: Color(0xFF398AE5),
       appBar: AppBar(
         leading: IconButton(
-          icon: Icon(Icons.home),
+          icon: Icon(
+            Icons.home,
+            size: 30,
+          ),
           onPressed: () {},
         ),
         actions: [
           IconButton(
-            icon: Icon(Icons.refresh),
+            icon: Icon(
+              Icons.refresh,
+              size: 30,
+            ),
             onPressed: () {
               Navigator.push(
                 context,
@@ -60,7 +66,10 @@ class _HomeScreenState extends State<HomeScreen> {
             },
           ),
           IconButton(
-            icon: Icon(Icons.settings),
+            icon: Icon(
+              Icons.settings,
+              size: 30,
+            ),
             onPressed: () {
               Navigator.push(
                 context,

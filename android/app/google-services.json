@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "1002901601337",
+    "firebase_url": "https://rpc-weather.firebaseio.com",
+    "project_id": "rpc-weather",
+    "storage_bucket": "rpc-weather.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1002901601337:android:bfcdb644666fefec3021e8",
+        "android_client_info": {
+          "package_name": "com.logicoip.Model"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1002901601337-3c8ehg4fhbmrojk1q4lipur6r909idl0.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDCkQMdoYYjC7g3r-EN_1-gQ2xaajvjrd4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1002901601337-3c8ehg4fhbmrojk1q4lipur6r909idl0.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

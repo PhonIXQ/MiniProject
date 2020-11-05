@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 
 class TempDropdown extends StatelessWidget {
-  final List<int> tempsLabel;
-  final int temps;
-  final Function(int) onChanged;
+  final List<double> tempLabel;
+  final double temps;
+  final Function(double) onChanged;
 
   const TempDropdown({
-    @required this.tempsLabel,
+    @required this.tempLabel,
     @required this.temps,
     @required this.onChanged,
   });
@@ -15,15 +15,15 @@ class TempDropdown extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 12.0),
-      height: 30.0,
+      height: 40.0,
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(30.0),
       ),
       child: DropdownButtonHideUnderline(
-        child: DropdownButton<int>(
+        child: DropdownButton<double>(
           value: temps,
-          items: tempsLabel
+          items: tempLabel
               .map((e) => DropdownMenuItem(
                     child: Row(
                       children: <Widget>[

@@ -1,5 +1,7 @@
+import 'package:Model/screens/login_screen.dart';
 import 'package:Model/utilities/temp_dropdown.dart';
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
 
 class RangeTempHumi extends StatefulWidget {
   @override
@@ -7,8 +9,8 @@ class RangeTempHumi extends StatefulWidget {
 }
 
 class _RangeTempHumiState extends State<RangeTempHumi> {
-  int _lowerTemp = 29;
-  int _overTemp = 35;
+  double _tempOver;
+  double _tempLower;
 
   @override
   void initState() {
@@ -19,7 +21,29 @@ class _RangeTempHumiState extends State<RangeTempHumi> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Color(0xFF398AE5),
-      appBar: AppBar(),
+      appBar: AppBar(
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back),
+          onPressed: () {
+            Navigator.pop(context);
+          },
+        ),
+        actions: [
+          IconButton(
+              icon: Icon(
+                Icons.exit_to_app,
+                size: 30,
+              ),
+              onPressed: () {
+                Navigator.pop(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => LoginScreen(),
+                  ),
+                );
+              }),
+        ],
+      ),
       body: Column(
         children: <Widget>[
           Padding(
@@ -28,7 +52,7 @@ class _RangeTempHumiState extends State<RangeTempHumi> {
               "Range Temperature-Humity",
               style: TextStyle(
                 color: Colors.white,
-                fontSize: 25,
+                fontSize: 24,
                 fontWeight: FontWeight.bold,
               ),
             ),
@@ -37,6 +61,7 @@ class _RangeTempHumiState extends State<RangeTempHumi> {
             padding: EdgeInsets.only(left: 10.0, right: 10.0),
             child: Image.asset('assets/images/range_temp.jpg'),
           ),
+          SizedBox(height: MediaQuery.of(context).size.height * 0.03),
           Container(
             padding: EdgeInsets.only(
               top: 10,
@@ -79,9 +104,9 @@ class _RangeTempHumiState extends State<RangeTempHumi> {
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: <Widget>[
                     TempDropdown(
-                      tempsLabel: [29, 30, 31, 32, 33, 34, 35, 36],
-                      temps: _lowerTemp,
-                      onChanged: (val) => setState(() => _lowerTemp = val),
+                      tempLabel: [21, 22, 23, 24, 25, 26, 27, 28, 29, 30],
+                      temps: _tempLower,
+                      onChanged: (value) => setState(() => _tempLower = value),
                     ),
                     Text(
                       "<",
@@ -92,28 +117,31 @@ class _RangeTempHumiState extends State<RangeTempHumi> {
                       ),
                     ),
                     TempDropdown(
-                      tempsLabel: [29, 30, 31, 32, 33, 34, 35, 36],
-                      temps: _overTemp,
-                      onChanged: (val) => setState(() => _overTemp = val),
+                      tempLabel: [29, 30, 31, 32, 33, 34, 35, 36, 37, 38],
+                      temps: _tempOver,
+                      onChanged: (value) => setState(() => _tempOver = value),
                     ),
                   ],
                 ),
               ],
             ),
           ),
-          _buildSentResult(),
+          _buildSendResult(),
         ],
       ),
     );
   }
 
-  Widget _buildSentResult() {
+  Widget _buildSendResult() {
     return Container(
       padding: EdgeInsets.symmetric(vertical: 10.0),
       width: 100.0,
+      height: 70,
       child: RaisedButton(
         elevation: 5.0,
-        onPressed: () {},
+        onPressed: () {
+          sendResult();
+        },
         padding: EdgeInsets.all(10.0),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(30.0),
@@ -130,5 +158,12 @@ class _RangeTempHumiState extends State<RangeTempHumi> {
         ),
       ),
     );
+  }
+
+  Future sendResult() async {
+    await http.post(
+        "https://api.thingspeak.com/update?api_key=NEJEEQQGJKEUSOC3&field7=$_tempLower" +
+            "&field8=$_tempOver");
+    print('Push results');
   }
 }
